@@ -30,7 +30,7 @@ class BaseModel:
             if 'created_at' not in kwargs:
                 self.created_at = self.updated_at = datetime.now()
         else:
-            self.id = str(uuid.uuid())
+            self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
