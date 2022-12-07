@@ -1,4 +1,3 @@
-
 -- Creates a MySQL server with:
 --   Database hbnb_test_db.
 --   User hbnb_test with password hbnb_test_pwd in localhost.
