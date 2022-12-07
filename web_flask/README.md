@@ -1,43 +1,44 @@
-# Web Flask
+<center><h1>0x04. AirBnB clone - Web framework</h1></center>
 
-This was a sub-project within AirBnB in which I began working with Flask
-and Jinja2. In this project, I began integrating the back-end storage engine
-with the web static HTML/CSS pages written earlier.
+<h3>Concepts</h3>
+For this project, students are expected to look at this concept:
 
-Files 0 - 6 were introductory tasks familiarizing myself with
-using Flask. Files 7 forward involved gradually putting together more and more
-complex Jinja templates based on the HBnB HTML pages.
+<ul>
+<li><a href="https://alx-intranet.hbtn.io/concepts/74">AirBnB clone</a></li>
+</ul>
 
-The most complete Flask/Jinja app-template combo in this directory is defined
-in Flask module [100-hbnb.py](./100-hbnb.py) and Jinja template
-[100-hbnb.html](./100-hbnb.html).
+<h3>Resources</h3>
 
-To run the Flask app, execute the following command from the root directory
-of the project:
+<p><b>Read or watch:</b></p>
 
-```
-~ $ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost
-HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db python3 -m web_flask.100-hbnb
-```
+<ul>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/64SQpOGx46Ljp0zFJchESg">What is a Web Framework?</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/LM0zyaIOfusNXz12bZXKVQ">A Minimal Application</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/PBYpb5Giu7U5uOb-A9PMxw">Routing</a> (except “HTTP Methods”)</li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/g-W9H6gxHkNqaTw6giSG8Q">Rendering Templates</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/5Y_A7XB9Qo1JeZgiSUq0yQ">Synopsis</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/ITzobwYP1Lc4KqEUUcYCGw">Variables</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/ykUFuQSE9KD1M7WGY-4v4w">Comments</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/NMLZom50ZVOxQlgYW3rnuQ">Whitespace Control</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/5AGhzIt0zSpPJh9SFysdMQ">List of Control Structures</a> (read up to “Call”)</li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/VJs151_hsE9g7Cw-Pz5bVg">Flask</a></li>
+<li><a href="https://alx-intranet.hbtn.io/rltoken/2y_hunzGCCvSot06EW67UQ">Jinja</a></li>
+</ul>
 
-The app can be accessed at `0.0.0.0:5000/hbnb`.
+<h3>Learning Objectives</h3>
 
-Screenshots:
-<p align="center">
-  <img src="https://github.com/bdbaraban/AirBnB_clone_v2/blob/master/assets/hbnb_screenshot_0.png"
-       alt="HolbertonBnB logo">
-</p>
+At the end of this project, you are expected to be able to explain to anyone, <b>without the help of Google:</b>
 
----
+<h4>General</h4>
 
-<p align="center">
-  <img src="https://github.com/bdbaraban/AirBnB_clone_v2/blob/master/assets/hbnb_screenshot_1.png"
-       alt="HolbertonBnB logo">
-</p>
-
----
-
-<p align="center">
-  <img src="https://github.com/bdbaraban/AirBnB_clone_v2/blob/master/assets/hbnb_screenshot_2.png"
-       alt="HolbertonBnB logo">
-</p>
+<ul>
+<li>What is a Web Framework</li>
+<li>How to build a web framework with Flask</li>
+<li>How to define routes in Flask</li>
+<li>What is a route</li>
+<li>How to handle variables in a route</li>
+<li>What is a template</li>
+<li>How to create a HTML response in Flask by using a template</li>
+<li>How to create a dynamic template (loops, conditions…)</li>
+<li>How to display in HTML data from a MySQL database</li>
+</ul>

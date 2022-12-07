@@ -1,91 +1,78 @@
-# Configures a web server for deployment of web_static.
-
-# Nginx configuration file
-$nginx_conf = "server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    add_header X-Served-By ${hostname};
-    root   /var/www/html;
-    index  index.html index.htm;
-
-    location /hbnb_static {
-        alias /data/web_static/current;
-        index index.html index.htm;
-    }
-
-    location /redirect_me {
-        return 301 http://cuberule.com/;
-    }
-
-    error_page 404 /404.html;
-    location /404 {
-      root /var/www/html;
-      internal;
-    }
-}"
-
-package { 'nginx':
-  ensure   => 'present',
-  provider => 'apt'
-} ->
-
-file { '/data':
-  ensure  => 'directory'
-} ->
-
-file { '/data/web_static':
-  ensure => 'directory'
-} ->
-
-file { '/data/web_static/releases':
-  ensure => 'directory'
-} ->
-
-file { '/data/web_static/releases/test':
-  ensure => 'directory'
-} ->
-
-file { '/data/web_static/shared':
-  ensure => 'directory'
-} ->
-
-file { '/data/web_static/releases/test/index.html':
-  ensure  => 'present',
-  content => "Holberton School Puppet\n"
-} ->
-
-file { '/data/web_static/current':
-  ensure => 'link',
-  target => '/data/web_static/releases/test'
-} ->
-
-exec { 'chown -R ubuntu:ubuntu /data/':
-  path => '/usr/bin/:/usr/local/bin/:/bin/'
+# Manifest that configures a web server for deployment
+exec { 'exec_0':
+  command => 'sudo sudo apt-get update -y',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
 }
 
-file { '/var/www':
-  ensure => 'directory'
-} ->
+exec { 'exec_1':
+  require => Exec['exec_0'],
+  command => 'sudo apt-get install nginx -y',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
+}
 
-file { '/var/www/html':
-  ensure => 'directory'
-} ->
+exec { 'exec_2':
+  require => Exec['exec_1'],
+  command => 'sudo mkdir -p /data/web_static/shared/',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
+}
 
-file { '/var/www/html/index.html':
-  ensure  => 'present',
-  content => "Holberton School Nginx\n"
-} ->
+exec { 'exec_3':
+  require => Exec['exec_2'],
+  command => 'sudo mkdir -p /data/web_static/releases/test/',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
+}
 
-file { '/var/www/html/404.html':
-  ensure  => 'present',
-  content => "Ceci n'est pas une page\n"
-} ->
+exec { 'exec_4':
+  require => Exec['exec_3'],
+  command => 'sudo touch /data/web_static/releases/test/index.html',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
+}
 
-file { '/etc/nginx/sites-available/default':
-  ensure  => 'present',
-  content => $nginx_conf
-} ->
+exec { 'exec_5':
+  require => Exec['exec_4'],
+  command => 'echo "Holberton School" | sudo tee /data/web_static/releases/test/index.html >/dev/null',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
+}
 
-exec { 'nginx restart':
-  path => '/etc/init.d/'
+exec { 'exec_6':
+  require => Exec['exec_5'],
+  command => 'rm -rf /data/web_static/current',
+  path    => ['/usr/bin', '/bin', '/usr/sbin'],
+  returns => [0,1]
+}
+
+
+exec { 'exec_7':
+  require => Exec['exec_6'],
+  command => 'sudo ln -sf /data/web_static/releases/test/ /data/web_static/current',
+  path    => ['/usr/bin', '/bin', '/usr/sbin'],
+  returns => [0,1]
+}
+
+exec { 'exec_8':
+  require => Exec['exec_7'],
+  command => 'sudo chown -R ubuntu:ubuntu /data/',
+  path    => ['/usr/bin', '/bin', '/usr/sbin'],
+  returns => [0,1]
+}
+
+exec { 'exec_9':
+  require     => Exec['exec_8'],
+  environment => ['C=\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\tautoindex off;\n\t}\n'],
+  command     => 'sudo sed -i "38i $C" /etc/nginx/sites-available/default',
+  path        => ['/usr/bin', '/bin'],
+  returns     => [0,1]
+}
+
+exec { 'exec_10':
+  require => Exec['exec_9'],
+  command => 'sudo service nginx restart',
+  path    => ['/usr/bin', '/bin', '/usr/sbin'],
+  returns => [0,1]
 }
