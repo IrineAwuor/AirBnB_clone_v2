@@ -5,7 +5,6 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 # import models
 
-
 class User(BaseModel, Base):
     """This is the class for user
     Attributes:

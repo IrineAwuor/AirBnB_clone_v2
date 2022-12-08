@@ -1,17 +1,9 @@
 #!/usr/bin/python3
 """ Module for testing file storage"""
 import unittest
-import pep8
-import json
-import os
 from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-from models.engine.file_storage import FileStorage
+from models import storage
+import os
 
 
 class TestFileStorage(unittest.TestCase):
@@ -90,7 +82,24 @@ class TestFileStorage(unittest.TestCase):
             for line in r:
                 self.assertEqual(line, "{}")
         self.assertIs(self.storage.reload(), None)
+    def test_type_path(self):
+        """ Confirm __file_path is string """
+        self.assertEqual(type(storage._FileStorage__file_path), str)
 
+    def test_type_objects(self):
+        """ Confirm __objects is a dict """
+        self.assertEqual(type(storage.all()), dict)
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_key_format(self):
+        """ Key is properly formatted """
+        new = BaseModel()
+        _id = new.to_dict()['id']
+        for key in storage.all().keys():
+            temp = key
+        self.assertEqual(temp, 'BaseModel' + '.' + _id)
+
+    def test_storage_var_created(self):
+        """ FileStorage object storage created """
+        from models.engine.file_storage import FileStorage
+        print(type(storage))
+        self.assertEqual(type(storage), FileStorage)

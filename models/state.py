@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
+<<<<<<< HEAD
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, String, ForeignKey, Integer
@@ -28,3 +29,11 @@ class State(BaseModel, Base):
                          models.storage.all(City).items()
                          if value.state_id == self.id]
             return city_list
+=======
+from models.base_model import BaseModel
+
+
+class State(BaseModel):
+    """ State class """
+    name = ""
+>>>>>>> parent of ed96845 (upload file)
