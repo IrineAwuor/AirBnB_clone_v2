@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Float, Integer, ForeignKey, Table
@@ -22,8 +21,7 @@ class Place(BaseModel, Base):
 
     """ A place to stay """
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
-    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-=======
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False
 """This is the place class"""
 from models.base_model import BaseModel, Base
 import os
@@ -57,7 +55,6 @@ class Place(BaseModel, Base):
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
->>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
     number_rooms = Column(Integer, nullable=False, default=0)
@@ -66,26 +63,22 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-<<<<<<< HEAD
     amenity_ids = []
 
     if environ['HBNB_TYPE_STORAGE'] == 'db':
         reviews = relationship('Review',
                                cascade='all, delete', backref='place')
         amenities = relationship('Amenity', backref='place_amenities',
-                                 secondary='place_amenity',
-=======
+                                 secondary='place_amenity')
 
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", backref="place",
                                cascade="all, delete, delete-orphan")
         amenities = relationship("Amenity", secondary=place_amenity,
->>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
                                  viewonly=False)
     else:
         @property
         def reviews(self):
-<<<<<<< HEAD
             """ getter returns list of reviews """
             list_of_reviews = []
             all_reviews = models.storage.all(Review)
@@ -110,7 +103,6 @@ class Place(BaseModel, Base):
             if type(obj).__name__ == 'Amenity':
                 new_amenity = 'Amenity' + '.' + obj.id
                 self.amenity_ids.append(new_amenity)
-=======
             """Return list of reviews"""
 
             review_list = [value for key, value in models.storage.
@@ -136,4 +128,3 @@ class Place(BaseModel, Base):
             """
             if isinstance(amenity_obj, models.Amenity):
                 self.amenities.append(amenity_obj.id)
->>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731

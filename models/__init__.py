@@ -25,6 +25,7 @@ else:
 =======
 """This module instantiates an object of class FileStorage"""
 from models.engine.file_storage import FileStorage
+<<<<<<< HEAD
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -39,5 +40,10 @@ if os.getenv("HBNB_TYPE_STORAGE") == "db":
     storage = DBStorage()
 else:
     storage = FileStorage()
+=======
+
+
+storage = FileStorage()
+>>>>>>> parent of ed96845 (upload file)
 storage.reload()
 >>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
