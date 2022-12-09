@@ -9,9 +9,9 @@ from os import environ
 class State(BaseModel, Base):
     """ Class attributes"""
     __tablename__ = "states"
-    name = Column(String(128), nullable=False)
 
     if environ['HBNB_TYPE_STORAGE'] == 'db':
+        name = Column(String(128), nullable=False)
         cities = relationship('City', cascade='all, delete', backref='state')
     else:
         @property
