@@ -10,10 +10,6 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-classes = {"User": User, "BaseModel": BaseModel,
-           "Place": Place, "State": State,
-           "City": City, "Amenity": Amenity,
-           "Review": Review}
 
 """check envirn var to determine storage method"""
 if environ['HBNB_TYPE_STORAGE'] == 'db':
