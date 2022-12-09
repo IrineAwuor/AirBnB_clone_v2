@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Float, Integer, ForeignKey, Table
@@ -22,6 +23,41 @@ class Place(BaseModel, Base):
     """ A place to stay """
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+=======
+"""This is the place class"""
+from models.base_model import BaseModel, Base
+import os
+from sqlalchemy import Float, Integer, Table, ForeignKey, String, Column
+from sqlalchemy.orm import relationship
+import models
+
+
+place_amenity = Table('place_amenity', Base.metadata, Column(
+    'place_id', String(60), ForeignKey(
+        'places.id'), primary_key=True, nullable=False), Column(
+            'amenity_id', String(60), ForeignKey(
+                'amenities.id'), primary_key=True, nullable=False))
+
+
+class Place(BaseModel, Base):
+    """This is the class for Place
+    Attributes:
+        city_id: city id
+        user_id: user id
+        name: name input
+        description: string of description
+        number_rooms: number of room in int
+        number_bathrooms: number of bathrooms in int
+        max_guest: maximum guest in int
+        price_by_night:: pice for a staying in int
+        latitude: latitude in flaot
+        longitude: longitude in float
+        amenity_ids: list of Amenity ids
+    """
+    __tablename__ = "places"
+    city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
+    user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
     number_rooms = Column(Integer, nullable=False, default=0)
@@ -30,6 +66,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
+<<<<<<< HEAD
     amenity_ids = []
 
     if environ['HBNB_TYPE_STORAGE'] == 'db':
@@ -37,10 +74,18 @@ class Place(BaseModel, Base):
                                cascade='all, delete', backref='place')
         amenities = relationship('Amenity', backref='place_amenities',
                                  secondary='place_amenity',
+=======
+
+    if os.getenv("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete, delete-orphan")
+        amenities = relationship("Amenity", secondary=place_amenity,
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
                                  viewonly=False)
     else:
         @property
         def reviews(self):
+<<<<<<< HEAD
             """ getter returns list of reviews """
             list_of_reviews = []
             all_reviews = models.storage.all(Review)
@@ -65,3 +110,30 @@ class Place(BaseModel, Base):
             if type(obj).__name__ == 'Amenity':
                 new_amenity = 'Amenity' + '.' + obj.id
                 self.amenity_ids.append(new_amenity)
+=======
+            """Return list of reviews"""
+
+            review_list = [value for key, value in models.storage.
+                           all(Review).items() if value.place_id == self.id]
+
+            return review_list
+
+        @property
+        def amenities(self):
+            """ Getter attribute amenities that returns the list of Amenity
+            instances based on the attribute amenity_ids that contains all
+            Amenity.id linked to the Place """
+            amenity_list = [value for key, value in models.storage.
+                            all(Amenity).items() if value.place_id == self.id]
+
+            return amenity_list
+
+        @amenities.setter
+        def amenities(self, amenity_obj):
+            """
+            Setter attribute amenities that handles append method for adding an
+            Amenity.id o the attribute amenity_ids
+            """
+            if isinstance(amenity_obj, models.Amenity):
+                self.amenities.append(amenity_obj.id)
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731

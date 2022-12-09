@@ -17,9 +17,14 @@ class HBNBCommand(cmd.Cmd):
     """this class is entry point of the command interpreter
     """
     prompt = "(hbnb) "
+<<<<<<< HEAD
     all_classes = {"BaseModel": BaseModel, "User": User, "State": State,
                    "City": City, "Amenity": Amenity,
                    "Place": Place, "Review": Review}
+=======
+    all_classes = {"BaseModel", "User", "State", "City",
+                   "Amenity", "Place", "Review"}
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
 
     def emptyline(self):
         """Ignores empty spaces"""
@@ -42,6 +47,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
+<<<<<<< HEAD
             my_list = line.split(" ")  # split cmd line into list
 
             if my_list:  # if list not empty
@@ -69,6 +75,33 @@ class HBNBCommand(cmd.Cmd):
         except SyntaxError:
             print("** class name missing **")
         except KeyError:
+=======
+            my_list = line.split(" ")
+            obj = eval("{}()".format(my_list[0]))
+            # key=value parameters validation
+            if (len(my_list) > 1):
+                dic = {}
+                for arg in range(1, len(my_list)):
+                    k_v = my_list[arg].split("=")
+                    dic[k_v[0]] = k_v[1]
+                for key, value in dic.items():
+                    if (value.startswith('"')):
+                        # Slicing the string withouth ", is the same
+                        # like value[1:len - 1]
+                        value = value[1:-1]
+                        value = value.replace('"', '\\')
+                        value = value.replace('_', ' ')
+                    elif "." in value:
+                        value = float(value)
+                    else:
+                        value = int(value)
+                    setattr(obj, key, value)
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
             print("** class doesn't exist **")
 
     def do_show(self, line):
@@ -121,8 +154,12 @@ class HBNBCommand(cmd.Cmd):
             objects = storage.all()
             key = my_list[0] + '.' + my_list[1]
             if key in objects:
+<<<<<<< HEAD
                 # del objects[key]
                 storage.delete(objects[key])
+=======
+                del objects[key]
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
                 storage.save()
             else:
                 raise KeyError()
@@ -220,6 +257,7 @@ class HBNBCommand(cmd.Cmd):
             print(counter)
         except NameError:
             print("** class doesn't exist **")
+<<<<<<< HEAD
 
     def strip_clean(self, args):
         """strips the argument and return a string of command
@@ -286,6 +324,58 @@ class HBNBCommand(cmd.Cmd):
             return True
         except ValueError:
             return False
+=======
+
+    def strip_clean(self, args):
+        """strips the argument and return a string of command
+        Args:
+            args: input list of args
+        Return:
+            returns string of argumetns
+        """
+        new_list = []
+        new_list.append(args[0])
+        try:
+            my_dict = eval(
+                args[1][args[1].find('{'):args[1].find('}')+1])
+        except Exception:
+            my_dict = None
+        if isinstance(my_dict, dict):
+            new_str = args[1][args[1].find('(')+1:args[1].find(')')]
+            new_list.append(((new_str.split(", "))[0]).strip('"'))
+            new_list.append(my_dict)
+            return new_list
+        new_str = args[1][args[1].find('(')+1:args[1].find(')')]
+        new_list.append(" ".join(new_str.split(", ")))
+        return " ".join(i for i in new_list)
+
+    def default(self, line):
+        """retrieve all instances of a class and
+        retrieve the number of instances
+        """
+        my_list = line.split('.')
+        if len(my_list) >= 2:
+            if my_list[1] == "all()":
+                self.do_all(my_list[0])
+            elif my_list[1] == "count()":
+                self.count(my_list[0])
+            elif my_list[1][:4] == "show":
+                self.do_show(self.strip_clean(my_list))
+            elif my_list[1][:7] == "destroy":
+                self.do_destroy(self.strip_clean(my_list))
+            elif my_list[1][:6] == "update":
+                args = self.strip_clean(my_list)
+                if isinstance(args, list):
+                    obj = storage.all()
+                    key = args[0] + ' ' + args[1]
+                    for k, v in args[2].items():
+                        self.do_update(key + ' "{}" "{}"'.format(k, v))
+                else:
+                    self.do_update(args)
+        else:
+            cmd.Cmd.default(self, line)
+
+>>>>>>> 4d7c2a3c7c21a1669bc53b99b54169c35bc3e731
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
